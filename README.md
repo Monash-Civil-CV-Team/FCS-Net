@@ -23,3 +23,4 @@ If you try to use your own data, please use following format
 2. Config the specification of the training process in train.py (e.g. epochs, steps) and run python train.py  
 3. After the training process is complete, the h5 file with saved weight will generated at the root folder, please run the evaluation.py to evaluate the performance of the model.  
 4. the results of cracks segmentation will generate automatically and save at the folder in /data/test/test_results/.  
+# Citation
