@@ -17,13 +17,6 @@ If you try to use your own data, please use following format
   > --test  
    >> --image  
    >> --mask  
-├── Data
-│   ├── Train
-│       ├── image
-│       ├── mask
-│    ├── test
-│       ├── image
-│       ├── mask
 
 
 2. Config the specification of the training process in train.py (e.g. epochs, steps) and run python train.py  
