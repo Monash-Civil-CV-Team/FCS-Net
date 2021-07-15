@@ -3,7 +3,7 @@ import cv2 as cv
 import os
 import openpyxl as xl
 
-def confusion_matrix(label, pred, n_class=2): #用np.bincount（）计算混淆矩阵
+def confusion_matrix(label, pred, n_class=2): #use np.bincount（）compute confusion matrix
     mask = (label >=0) & (label < n_class)
     hist = np.bincount(
         n_class*label[mask].astype(int) + pred[mask],
@@ -19,7 +19,7 @@ def new_cm(label, pred):
     FN = np.sum(np.multiply(y_true, (1-y_pred)))
     return TP, TN, FP, FN
 
-def write_iou_xlsx(path, sheet_name, value): #iou结果写入excel文件
+def write_iou_xlsx(path, sheet_name, value): #save the results of MIoU to excel file
     index = len(value)
     workbook = xl.Workbook()
     sheet = workbook.active
@@ -28,10 +28,8 @@ def write_iou_xlsx(path, sheet_name, value): #iou结果写入excel文件
         for j in range(0, len(value[i])):
             sheet.cell(row=i+1, column=j+1, value=str(value[i][j]))
     workbook.save(path)
-    print('xlsx表格写入数据成功')
+    print('successfully write the results to excel')
 
-# label_dir = 'C:/Users/zhuhu/Desktop/test set/crack/mask/' #ground truth的储存路径
-#     pred_dir = 'C:/Users/zhuhu/Desktop/test results/Self_model09/crack/' #模型输出图像的储存路径
 
 def iou(label_dir, pred_dir, model_name, xls_dir, type):
     n=0
@@ -63,10 +61,10 @@ def iou(label_dir, pred_dir, model_name, xls_dir, type):
                 new_pred = pred/255
                 pred[new_pred>threshold] = 1
                 pred[new_pred<=threshold] = 0
-                hist = confusion_matrix(label, pred) #计算混淆矩阵
+                hist = confusion_matrix(label, pred) #compute confusion martix
                 TP, TN, FP, FN = hist[1][1], hist[0][0], hist[0][1], hist[1][0]
-                iou_crack = TP / (TP+FP+FN) #单张图像裂缝类的iou=TP/(TP+FN+FP)
-                iou_back = TN / (TN+FN+FP) #单张图像背景类的iou
+                iou_crack = TP / (TP+FP+FN) #iou of single crack image =TP/(TP+FN+FP)
+                iou_back = TN / (TN+FN+FP) #iou of single background image
                 acc = (TP+TN)/(TP+FP+TN+FN)
                 pre = TP/(TP+FP)
                 recall = TP/(TP+FN)
@@ -74,12 +72,12 @@ def iou(label_dir, pred_dir, model_name, xls_dir, type):
                 m_iou = (iou_crack + iou_back) / 2
                 results.append([test.split('.')[0], str(acc), str(pre), str(recall), str(F1),
                                 str(iou_crack), str(iou_back), str(m_iou),
-                                str(TP), str(TN), str(FP), str(FN)]) #保存iou值然后写进excel
+                                str(TP), str(TN), str(FP), str(FN)]) #save the results of iou to the excel file
                 print('img=', test)
         n=n+1
-    m_iou_crack = total_iou_crack/n #测试集所有图像裂缝类的平均iou
-    m_iou_back = total_iou_back/n #测试集所有图像背景类的平均iou
-    m_iou_total = (m_iou_crack+m_iou_back)/2 #测试集的mean iou
+    m_iou_crack = total_iou_crack/n #Mean IoU of crack image in test set
+    m_iou_back = total_iou_back/n #Mean IoU of background image in test set
+    m_iou_total = (m_iou_crack+m_iou_back)/2 #mean iou of test set
     m_acc = total_acc/n
     m_pre = total_pre/n
     m_recall = total_recall/n
