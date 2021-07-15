@@ -74,8 +74,8 @@ def vaildGenerator(batch_size,train_path,image_folder,mask_folder,aug_dict,image
                     mask_color_mode = "grayscale",image_save_prefix  = "image",mask_save_prefix  = "mask",
                     flag_multi_class = False,num_class = 2,save_to_dir = None,target_size = (512,512),seed = 1): #specification of vaildation datasets
 
-    image_datagen = ImageDataGenerator(**aug_dict)
-    mask_datagen = ImageDataGenerator(**aug_dict)
+    image_datagen = ImageDataGenerator()
+    mask_datagen = ImageDataGenerator()
     image_generator = image_datagen.flow_from_directory(
         train_path,
         classes = [image_folder],
