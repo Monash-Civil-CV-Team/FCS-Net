@@ -8,7 +8,7 @@ Image annotation is an important task in deep learning models and application co
 # Enviroment
 Please run pip install -r requirements.txt 
 # Procedure
-1.Please download the data through this link [train data](https://drive.google.com/file/d/1HCBkfUivl0bmrHkS32urTjQP2hbNhQby/view?usp=sharing), [test data](https://drive.google.com/file/d/1-hJwkERcLR6HrmVZFxq1j7vNk9V9jP6K/view?usp=sharing) and put the data at the root of the project  
+1.Please download the data through this link [Original data](http://www.schm.org.cn/#/IPC-SHM,2020/dataDownload) and put the data at the root of the project  
 If you try to use your own data, please use following format  
  >--Data  
  >> --train  
