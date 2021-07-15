@@ -3,9 +3,7 @@ from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-#import tensorflow.compat.v1 as tf
 import tensorflow as tf
-
 from keras.backend.tensorflow_backend import set_session
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # select specific GPU based on your environment
@@ -65,10 +63,7 @@ def trainGenerator(batch_size,train_path,image_folder,mask_folder,aug_dict,image
         img,mask = adjustData(img,mask,flag_multi_class,num_class)
         yield (img,mask)
 
-
-
 print("loading training data done")
-
 
 def vaildGenerator(batch_size,train_path,image_folder,mask_folder,aug_dict,image_color_mode = "rgb",
                     mask_color_mode = "grayscale",image_save_prefix  = "image",mask_save_prefix  = "mask",
@@ -116,7 +111,6 @@ data_gen_args = dict(rotation_range=20,
 myGene = trainGenerator(1, 'data/train', 'image', 'mask', data_gen_args, save_to_dir = None)
 myGene_vaild = vaildGenerator(1, 'data/test', 'image', 'mask', data_gen_args, save_to_dir = None)
 model_name = 'FCS_Net'
-#model_name = 'linknet.hdf5'
 print("got FCS_Net")
 model = FCS_Net()
 model_checkpoint = ModelCheckpoint(model_name+".hdf5", monitor='loss', verbose=1, save_best_only=True)
@@ -126,7 +120,6 @@ print('Fitting model...')
 history = model.fit_generator(myGene, validation_data=myGene_vaild,validation_steps=2000,steps_per_epoch=2000, epochs=80, callbacks=[model_checkpoint])
 
 
-# save the training record
 with open(model_name+".txt", 'w') as f:
     f.write(str(history.history))
 
