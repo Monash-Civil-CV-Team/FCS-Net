@@ -26,6 +26,6 @@ __2.Model Hyperparameters Setting__
 Config the specification of the training process in train.py (e.g. epochs, steps) and run python train.py  
 __3.Model Evaluation__    
 After the training process is complete, the h5 file with saved weight will generated at the root folder, please run the evaluation.py to evaluate the performance of the model.  
-__4.Obtain the results__  
+__4.Obtain the Results__  
 the results of cracks segmentation will generate automatically and save at the folder in /data/test/test_results/.  
 # Citation
