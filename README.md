@@ -8,7 +8,7 @@ Image annotation is an important task in deep learning models and application co
 # Enviroment
 Please run pip install -r requirements.txt 
 # Procedure
-—__1.Data preparation__
+—__1.Data Preparation__  
 Please download the data through this link [Original data](http://www.schm.org.cn/#/IPC-SHM,2020/dataDownload) and put the data at the root of the project.
 the image process code is in folder "data processing" are used to precess the data. Please binary the mask images first, then cut and crop the images and masks.
 If you try to use your own data, please use following format  
@@ -22,7 +22,10 @@ If you try to use your own data, please use following format
  >>> --mask  
 
 
-2. Config the specification of the training process in train.py (e.g. epochs, steps) and run python train.py  
-3. After the training process is complete, the h5 file with saved weight will generated at the root folder, please run the evaluation.py to evaluate the performance of the model.  
-4. the results of cracks segmentation will generate automatically and save at the folder in /data/test/test_results/.  
+__2.Model Hyperparameters Setting__  
+Config the specification of the training process in train.py (e.g. epochs, steps) and run python train.py  
+__3.Model Evaluation__    
+After the training process is complete, the h5 file with saved weight will generated at the root folder, please run the evaluation.py to evaluate the performance of the model.  
+__4.Obtain the results__  
+the results of cracks segmentation will generate automatically and save at the folder in /data/test/test_results/.  
 # Citation
