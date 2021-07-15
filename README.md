@@ -8,7 +8,9 @@ Image annotation is an important task in deep learning models and application co
 # Enviroment
 Please run pip install -r requirements.txt 
 # Procedure
-1.Please download the data through this link [Original data](http://www.schm.org.cn/#/IPC-SHM,2020/dataDownload) and put the data at the root of the project  
+—__1.Data preparation__
+Please download the data through this link [Original data](http://www.schm.org.cn/#/IPC-SHM,2020/dataDownload) and put the data at the root of the project.
+the image process code is in folder "data processing" are used to precess the data. Please binary the mask images first, then cut and crop the images and masks.
 If you try to use your own data, please use following format  
  >--Data  
  >> --train  
