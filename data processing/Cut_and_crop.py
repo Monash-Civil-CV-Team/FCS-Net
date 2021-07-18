@@ -21,7 +21,7 @@ def cut_all_img(in_dir,  crop_dir):
               img = cv.imread(file_path)
               row=math.floor(img.shape[0]/crop_size)
               col=math.floor(img.shape[1]/crop_size)
-              resized = img[0:crop_size*row, 0:crop_size*col]
+              resized = cv.resize(img, ((crop_size*col),(crop_size*row)))
               #for i in range(6):
               for i in range(row):
                   #for j in range(9):
