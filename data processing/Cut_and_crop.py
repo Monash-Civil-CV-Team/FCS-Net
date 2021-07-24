@@ -7,7 +7,7 @@ from Cal_IoU import iou
 from cal_resize_iou import cal_resize_iou
 import cv2 as cv
 import math
-#调整原图尺寸，裁剪成patch
+
 crop_size=512
 crop_dir='new_data/test/crack/mask/'
 in_dir='binary/bw/'
@@ -33,5 +33,5 @@ def cut_all_img(in_dir,  crop_dir):
           except:
               print('failed to resize：', file_path)
 
-#cut_all_img(in_dir='new_test_set/', crop_dir='new_data/test/crack/image/') #in_dir是全尺寸原图地址，out_dir是裁剪patch的保存地址，也就是crack_input_dir
+#cut_all_img(in_dir='new_test_set/', crop_dir='new_data/test/crack/image/') 
 cut_all_img(in_dir, crop_dir)
