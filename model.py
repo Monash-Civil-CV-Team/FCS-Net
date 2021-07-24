@@ -129,10 +129,7 @@ def FCS_Net(pretrained_weights=None, input_size=(512, 512, 3)):
     x = Conv2DTranspose(2, kernel_size=(16, 16), strides=(8, 8), padding='same')(x)
     x = Activation('softmax')(x)
     model = Model(inputs=input, outputs=x)
-    #model = Model(img_input, x)
-    #model.compile(optimizer=Adam(lr=lr_init, decay=lr_decay),
-    #              loss='categorical_crossentropy',
-    #              metrics=[dice_coef])
+
     model.compile(optimizer=Adam(lr=5e-6), loss=[dice_loss(smooth=1.)], metrics=['accuracy'])
 
 
