@@ -66,20 +66,19 @@ def identity_block(input_tensor, filters, d_rates):
     return x
 
 
-def pyramid_pooling_block(input_tensor, bin_sizes):
-    concat_list = [input_tensor]
-    h = input_tensor.shape[1].value
-    w = input_tensor.shape[2].value
+def aspp_block(input_tensor, num_filters, rate_scale=1):
+    x1 = Conv2D(num_filters, (3, 3), dilation_rate=(1 * rate_scale, 1 * rate_scale), padding="same")(input_tensor)
+    x1 = BatchNormalization()(x1)
 
-    for bin_size in bin_sizes:
-        x = AveragePooling2D(pool_size=(h//bin_size, w//bin_size), strides=(h//bin_size, w//bin_size))(input_tensor)
-        x = Conv2D(512, kernel_size=1)(x)
-        x = Lambda(lambda x: tf.image.resize_images(x, (h, w)))(x)
+    x2 = Conv2D(num_filters, (3, 3), dilation_rate=(2 * rate_scale, 2 * rate_scale), padding="same")(input_tensor)
+    x2 = BatchNormalization()(x2)
 
-        concat_list.append(x)
+    x3 = Conv2D(num_filters, (3, 3), dilation_rate=(3 * rate_scale, 3 * rate_scale), padding="same")(input_tensor)
+    x3 = BatchNormalization()(x3)
 
-    return concatenate(concat_list)
-
+    x = Add()([x1, x2, x3])
+    x = Conv2D(num_filters, (1, 1), padding="same")(x)
+    return x
 
 def FCS_Net(pretrained_weights=None, input_size=(512, 512, 3)):
     input = Input(input_size)
@@ -118,7 +117,7 @@ def FCS_Net(pretrained_weights=None, input_size=(512, 512, 3)):
     x = identity_block(x, filters=[512, 512, 2048], d_rates=[1, 4, 1])
     x = identity_block(x, filters=[512, 512, 2048], d_rates=[1, 4, 1])
 
-    x = pyramid_pooling_block(x, [1, 2, 3, 6])
+    x=aspp_block(x,num_filters=1)
 
     x = Conv2D(512, kernel_size=3, padding='same')(x)
     x = BatchNormalization()(x)
@@ -129,7 +128,10 @@ def FCS_Net(pretrained_weights=None, input_size=(512, 512, 3)):
     x = Conv2DTranspose(2, kernel_size=(16, 16), strides=(8, 8), padding='same')(x)
     x = Activation('softmax')(x)
     model = Model(inputs=input, outputs=x)
-
+    #model = Model(img_input, x)
+    #model.compile(optimizer=Adam(lr=lr_init, decay=lr_decay),
+    #              loss='categorical_crossentropy',
+    #              metrics=[dice_coef])
     model.compile(optimizer=Adam(lr=5e-6), loss=[dice_loss(smooth=1.)], metrics=['accuracy'])
 
 
@@ -140,12 +142,3 @@ def FCS_Net(pretrained_weights=None, input_size=(512, 512, 3)):
         model.load_weights(pretrained_weights)
         print('loaded pretrained_weights ... {}'.format(pretrained_weights))
     return model
-
-
-
-
-
-
-
-
-
