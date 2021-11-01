@@ -107,7 +107,7 @@ data_gen_args = dict(rotation_range=20,
 
 
 myGene = trainGenerator(1, 'data/train', 'image', 'mask', data_gen_args, save_to_dir = None)
-myGene_vaild = vaildGenerator(1, 'data/test', 'image', 'mask', data_gen_args, save_to_dir = None)
+myGene_vaild = vaildGenerator(1, 'data/vaild', 'image', 'mask', data_gen_args, save_to_dir = None)
 model_name = 'FCS_Net'
 
 print("got FCS_Net")
