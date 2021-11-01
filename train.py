@@ -5,6 +5,7 @@ import os
 import matplotlib.pyplot as plt
 #import tensorflow.compat.v1 as tf
 import tensorflow as tf
+from keras.callbacks import ReduceLROnPlateau
 
 from keras.backend.tensorflow_backend import set_session
 
@@ -114,8 +115,8 @@ model = FCS_Net()
 model_checkpoint = ModelCheckpoint(model_name+".hdf5", monitor='loss', verbose=1, save_best_only=True)
 
 print('Fitting model...')
-
-history = model.fit_generator(myGene, validation_data=myGene_vaild,validation_steps=2000,steps_per_epoch=2000, epochs=80, callbacks=[model_checkpoint])
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=3, mode='auto')
+history = model.fit_generator(myGene, validation_data=myGene_vaild,validation_steps=2000,steps_per_epoch=2000, epochs=80, callbacks=[model_checkpoint,reduce_lr])
 
 
 # save the training record
